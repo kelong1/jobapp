@@ -7,7 +7,7 @@ dotenv.config();
 
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://your-frontend.onrender.com"],
+    origin: ["http://localhost:5173", "https://jobapp-1-du84.onrender.com"],
     credentials: true,
   }),
 );
@@ -25,8 +25,10 @@ app.get("/", (req, res) => {
   res.send("Hello World");
 });
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server is running on port ${process.env.PORT}`);
+const PORT = process.env.PORT || 5600;
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
 
 app.use("/api/users", require("./Routes/userRoutes"));
