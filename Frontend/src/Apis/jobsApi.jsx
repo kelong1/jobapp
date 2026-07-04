@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const JobApi = createApi({
   reducerPath: "jobs",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:5600/api/jobposts",
+    baseUrl: import.meta.env.VITE_API_URL,
     prepareHeaders: (headers) => {
       const user = JSON.parse(localStorage.getItem("user"));
 
@@ -20,7 +20,7 @@ const JobApi = createApi({
       query: () => {
         return {
           method: "GET",
-          url: "/getAllJobPosts",
+          url: "/jobposts/getAllJobPosts",
         };
       },
     }),
@@ -29,7 +29,7 @@ const JobApi = createApi({
       query: (jobData) => {
         return {
           method: "POST",
-          url: "/createJobPost",
+          url: "/jobposts/createJobPost",
           body: {
             title: jobData.title,
             description: jobData.description,
@@ -46,7 +46,7 @@ const JobApi = createApi({
       query: (job) => {
         return {
           method: "DELETE",
-          url: `/${job._id}`,
+          url: `/jobposts/${job._id}`,
         };
       },
     }),
@@ -55,7 +55,7 @@ const JobApi = createApi({
       query: ({ id, ...job }) => {
         return {
           method: "PUT",
-          url: `/${id}`,
+          url: `/jobposts/${id}`,
           body: {
             title: job.title,
             description: job.description,
@@ -72,7 +72,7 @@ const JobApi = createApi({
       query: (formData) => {
         return {
           method: "POST",
-          url: "/jobApplication",
+          url: "/jobposts/jobApplication",
           body: formData,
         };
       },
@@ -82,7 +82,7 @@ const JobApi = createApi({
       query: () => {
         return {
           method: "GET",
-          url: "/getUserJobApplications",
+          url: "/jobposts/getUserJobApplications",
         };
       },
     }),
@@ -91,14 +91,14 @@ const JobApi = createApi({
       query: (jobId) => {
         return {
           method: "GET",
-          url: `/getuser/${jobId}`,
+          url: `/jobposts/getUser/${jobId}`,
         };
       },
     }),
     updateApplicationStatus: builder.mutation({
       invalidatesTags: ["Applications"],
       query: ({ applicationId, status }) => ({
-        url: `/applications/${applicationId}/status`,
+        url: `/jobposts/applications/${applicationId}/status`,
         method: "PATCH",
         body: { status },
       }),
